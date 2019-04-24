@@ -55,16 +55,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         Glide.with(movieFragment).load(ApiClient.IMAGE_BASE_URL + movieItem.getPosterPath()).into(holder.imgPoster);
 
-//        Log.d(TAG, "MOVIES: " + movieItem);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(v.getContext(), movieItem.getId(), Toast.LENGTH_LONG).show();
-
-//                Intent intent = new Intent(v.getContext(), DetailMovie.class);
-//                intent.putExtra(KEY_MOVIE_ID, movieItem.getId());
-//                v.getContext().startActivity(intent);
-//                movieFragment.onMovieItemClick(position);
                 movieFragment.onMovieItemClick(holder.getAdapterPosition());
             }
         });

@@ -160,6 +160,13 @@ public class DetailMovie extends AppCompatActivity implements DetailMovieContrac
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "Movie Helper: " + movieHelper);
+        if (movieHelper != null) movieHelper.close();
+    }
+
 
     private void loadDataSQL() {
         movieHelper = new MovieHelper(this);
