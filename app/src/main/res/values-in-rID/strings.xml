@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movie Catalogue</string>
+    <string name="movies">Film</string>
+    <string name="tv_series">Serial TV</string>
+    <string name="change_language_settings">Ganti Bahasa</string>
+    <string name="favorite">Favorites</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="film">A Star is Born</string>
+    <string name="desc"><![CDATA[<string name=\"desc\">A musician helps a young singer find fame, even as age and alcoholism send his own career into a downward spiral </string>]]></string>
+    <string name="error">Error get data</string>
+    <string name="overview">Overview</string>
+    <string name="tagline">Tagline</string>
+    <string name="popularity">Popularity</string>
+</resources>
