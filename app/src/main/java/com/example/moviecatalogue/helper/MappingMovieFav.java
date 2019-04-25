@@ -14,19 +14,4 @@ import static com.example.moviecatalogue.database.DatabaseContract.MovieColumns.
 
 public class MappingMovieFav {
 
-    public static ArrayList<MovieItem> mapCursorToArrayList(Cursor cursor) {
-
-        ArrayList<MovieItem> movieItemsFav = new ArrayList<>();
-
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow(_ID));
-            int movieId = cursor.getInt(cursor.getColumnIndexOrThrow(MOVIE_ID));
-            String title = cursor.getString(cursor.getColumnIndexOrThrow(TITLE));
-            String overview = cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW));
-            String poster = cursor.getString(cursor.getColumnIndexOrThrow(POSTER));
-            movieItemsFav.add(new MovieItem(movieId,title,overview,poster));
-        }
-
-        return movieItemsFav;
-    }
 }

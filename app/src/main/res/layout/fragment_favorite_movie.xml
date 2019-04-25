@@ -6,9 +6,19 @@
     tools:context=".feature.favorites.favoriteMovie.FavoriteMovieFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list_fav_movie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:listItem="@layout/list_film">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <!--<ProgressBar-->
+        <!--android:id="@+id/progress_bar"-->
+        <!--style="@style/Widget.AppCompat.ProgressBar"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"/>-->
 
 </FrameLayout>

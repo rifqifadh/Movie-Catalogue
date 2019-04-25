@@ -1,6 +1,7 @@
 package com.example.moviecatalogue.feature.movies;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.moviecatalogue.feature.movies.MovieListContract;
 import com.example.moviecatalogue.model.MovieItem;
@@ -31,9 +32,12 @@ public class MovieListModel implements MovieListContract.Model {
             @Override
             public void onResponse(Call<MovieListResponse> call, Response<MovieListResponse> response) {
                 List<MovieItem> movieItems = response.body().getResults();
+
+                if (response.body() != null) {
+                    onFinishedListener.onFinished(movieItems);
+                }
 //                Log.d(TAG, "movieList: " + movieItems);
 //                Log.d(TAG, "LINK: " + apiService);
-                onFinishedListener.onFinished(movieItems);
             }
 
             @Override
