@@ -1,29 +1,20 @@
 package com.example.moviecatalogue.feature.favorites.favoriteMovie;
 
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.adapter.FavoriteMovieAdapter;
-import com.example.moviecatalogue.adapter.MovieAdapter;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 import static com.example.moviecatalogue.database.DatabaseContract.CONTENT_URI;
 
@@ -38,8 +29,7 @@ public class FavoriteMovieFragment extends Fragment {
     private FavoriteMovieAdapter favoriteMovieAdapter;
     private Cursor list;
     private RecyclerView recyclerView;
-
-
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public FavoriteMovieFragment() {
         // Required empty public constructor
@@ -52,10 +42,20 @@ public class FavoriteMovieFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_favorite_movie, container, false);
+        swipeRefreshLayout = view.findViewById(R.id.swiperefresh_movie);
         recyclerView = view.findViewById(R.id.rv_list_fav_movie);
 
         new loadData().execute();
         showListData();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new loadData().execute();
+                showListData();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         return view;
     }

@@ -24,12 +24,12 @@
         android:id="@+id/fav_movie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_10"
-        android:layout_marginEnd="@dimen/padding_10"
+        android:layout_marginStart="@dimen/padding_10"
+        android:layout_marginTop="@dimen/padding_10"
         android:src="@drawable/ic_favorite_border"
         app:fabSize="normal"
         app:layout_anchor="@+id/shimmer_view_container"
-        app:layout_anchorGravity="right|bottom" />
+        app:layout_anchorGravity="left|top" />
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"

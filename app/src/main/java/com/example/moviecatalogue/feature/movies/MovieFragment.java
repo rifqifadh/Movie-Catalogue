@@ -37,7 +37,6 @@ public class MovieFragment extends Fragment implements MovieListContract.View, M
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
-//    private Parcelable mMovieListState = null;
     private static final String MOVIE_LIST_STATE = "movieListState";
     private static final String TAG = "MovieFragment";
     private LinearLayoutManager linearLayoutManager;

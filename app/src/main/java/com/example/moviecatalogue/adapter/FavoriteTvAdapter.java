@@ -14,36 +14,32 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.moviecatalogue.R;
-import com.example.moviecatalogue.feature.detailMovie.DetailMovie;
-import com.example.moviecatalogue.feature.favorites.favoriteMovie.FavoriteMovieFragment;
-import com.example.moviecatalogue.model.MovieItem;
+import com.example.moviecatalogue.feature.detailTV.DetailTV;
+import com.example.moviecatalogue.feature.favorites.favoriteTV.FavoriteTVFragment;
+import com.example.moviecatalogue.model.TvSeriesItem;
 import com.example.moviecatalogue.network.ApiClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.moviecatalogue.utils.Constant.KEY_MOVIE_ID;
+import static com.example.moviecatalogue.utils.Constant.KEY_TV_ID;
 
-public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder> {
+public class FavoriteTvAdapter extends RecyclerView.Adapter<FavoriteTvAdapter.ViewHolder> {
 
     private Cursor cursor;
 
+    private FavoriteTVFragment favoriteTVFragment;
+
+    private final String TAG = "FavoriteTvAdapter";
 
 
-    private FavoriteMovieFragment favoriteMovieFragment;
-    private final String TAG = "FavoriteMovieAdapter";
-
-
-    public void setLismovies( Cursor lismovies) {
-        this.cursor = lismovies;
+    public void setListTvs(Cursor listTvs) {
+        this.cursor = listTvs;
     }
 
-    public FavoriteMovieAdapter(FavoriteMovieFragment favoriteMovieFragment, Cursor list) {
-        this.favoriteMovieFragment = favoriteMovieFragment;
+    public FavoriteTvAdapter(FavoriteTVFragment favoriteTVFragment, Cursor list) {
+        this.favoriteTVFragment = favoriteTVFragment;
     }
-
-
-
 
     @NonNull
     @Override
@@ -54,20 +50,22 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final MovieItem movieItem = getItem(position);
+        final TvSeriesItem tvSeriesItem = getItem(position);
 
-        holder.tvTitle.setText(movieItem.getTitle());
-        holder.tvDesc.setText(movieItem.getOverview());
-        Log.d(TAG, "Movie ID: " + movieItem.getId());
-        Glide.with(favoriteMovieFragment).load(ApiClient.IMAGE_BASE_URL + movieItem.getPosterPath()).into(holder.imgPoster);
+        Log.d(TAG, "FavoriteTvAdapter: " + tvSeriesItem.getOriginalName());
+
+        holder.tvTitle.setText(tvSeriesItem.getOriginalName());
+        holder.tvDesc.setText(tvSeriesItem.getOverview());
+        Glide.with(favoriteTVFragment).load(ApiClient.IMAGE_BASE_URL + tvSeriesItem.getPosterPath()).into(holder.imgPoster);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), DetailMovie.class);
-                intent.putExtra(KEY_MOVIE_ID, movieItem);
+                Intent intent = new Intent(holder.itemView.getContext(), DetailTV.class);
+                intent.putExtra(KEY_TV_ID, tvSeriesItem);
                 holder.itemView.getContext().startActivity(intent);
             }
         });
+
     }
 
     @Override
@@ -82,15 +80,15 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
     @Override
     public int getItemCount() {
-         if (cursor == null) return 0;
-         return cursor.getCount();
+        if (cursor == null) return 0;
+        return  cursor.getCount();
     }
 
-    private MovieItem getItem(int position) {
+    private TvSeriesItem getItem(int position) {
         if (!cursor.moveToPosition(position)) {
             throw new IllegalStateException("Position invalid");
         }
-        return new MovieItem(cursor);
+        return new TvSeriesItem(cursor);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -110,7 +108,6 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 }

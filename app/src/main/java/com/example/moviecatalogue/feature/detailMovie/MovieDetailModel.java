@@ -2,7 +2,6 @@ package com.example.moviecatalogue.feature.detailMovie;
 
 import android.util.Log;
 
-import com.example.moviecatalogue.model.Genres;
 import com.example.moviecatalogue.model.MovieDetailItem;
 import com.example.moviecatalogue.network.ApiClient;
 import com.example.moviecatalogue.network.ApiInterface;

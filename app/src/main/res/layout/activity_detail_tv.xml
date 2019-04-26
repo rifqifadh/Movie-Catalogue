@@ -28,8 +28,8 @@
         android:layout_marginTop="@dimen/padding_10"
         android:src="@drawable/ic_favorite_border"
         app:fabSize="normal"
-        app:layout_anchor="@+id/scroll_tv"
-        app:layout_anchorGravity="right|center" />
+        app:layout_anchor="@+id/shimmer_view_container_tv"
+        app:layout_anchorGravity="left|top" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scroll_tv"

@@ -2,7 +2,6 @@ package com.example.moviecatalogue.feature.tvSeries;
 
 import android.util.Log;
 
-import com.example.moviecatalogue.feature.tvSeries.TvSeriesContract;
 import com.example.moviecatalogue.model.TvListResponse;
 import com.example.moviecatalogue.model.TvSeriesItem;
 import com.example.moviecatalogue.network.ApiClient;

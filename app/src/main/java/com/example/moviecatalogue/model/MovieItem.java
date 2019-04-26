@@ -7,20 +7,12 @@ import android.os.Parcelable;
 import com.example.moviecatalogue.database.DatabaseContract;
 import com.google.gson.annotations.SerializedName;
 
-import static android.provider.BaseColumns._ID;
 import static com.example.moviecatalogue.database.DatabaseContract.MovieColumns.MOVIE_ID;
 import static com.example.moviecatalogue.database.DatabaseContract.MovieColumns.OVERVIEW;
 import static com.example.moviecatalogue.database.DatabaseContract.MovieColumns.POSTER;
 import static com.example.moviecatalogue.database.DatabaseContract.MovieColumns.TITLE;
 
 public class MovieItem implements Parcelable {
-
-//    public MovieItem(int id, String title, String posterPath, String overview) {
-//        this.id = id;
-//        this.title = title;
-//        this.posterPath = posterPath;
-//        this.overview = overview;
-//    }
 
     protected MovieItem(Parcel in) {
         id = in.readInt();
@@ -48,10 +40,6 @@ public class MovieItem implements Parcelable {
         this.overview = DatabaseContract.getColumnString(cursor, OVERVIEW);
         this.posterPath = DatabaseContract.getColumnString(cursor, POSTER);
     }
-
-//    public MovieItem() {
-//
-//    }
 
     public int getId() {
         return id;

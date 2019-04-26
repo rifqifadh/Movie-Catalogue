@@ -52,7 +52,6 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.ViewHo
         holder.tvTitle.setText(tvSeriesItem.getOriginalName());
         holder.tvDesc.setText(tvSeriesItem.getOverview());
 
-//        Log.d(TAG, "tv item :" + tvSeriesItem)
         Log.d(TAG, "TV: " + String.valueOf(tvSeriesItem.getId()));
 
         Glide.with(tvSeriesFragment).load(ApiClient.IMAGE_BASE_URL + tvSeriesItem.getPosterPath()).into(holder.imgPoster);
@@ -60,14 +59,6 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.ViewHo
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(v.getContext(), String.valueOf(tvSeriesItem.getId()), Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(v.getContext(), DetailMovie.class);
-//                intent.putExtra(DetailMovie.MOVIE_ITEM, new Gson().toJson(tvSeriesItem));
-//                v.getContext().startActivity(intent);
-
-//                Intent intent = new Intent(v.getContext(), DetailMovie.class);
-//                intent.putExtra(KEY_MOVIE_ID, tvSeriesItem.getId());
-//                v.getContext().startActivity(intent);
                 tvSeriesFragment.onMovieItemClick(holder.getAdapterPosition());
             }
         });

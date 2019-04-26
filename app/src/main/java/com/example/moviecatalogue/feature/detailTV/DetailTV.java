@@ -1,17 +1,23 @@
 package com.example.moviecatalogue.feature.detailTV;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.moviecatalogue.R;
+import com.example.moviecatalogue.database.DatabaseContract;
+import com.example.moviecatalogue.database.TvHelper;
 import com.example.moviecatalogue.model.TVDetailtem;
 import com.example.moviecatalogue.model.TvSeriesItem;
 import com.example.moviecatalogue.network.ApiClient;
@@ -21,15 +27,16 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.moviecatalogue.database.DatabaseContract.CONTENT_URI_TV;
 import static com.example.moviecatalogue.utils.Constant.KEY_TV_ID;
 
 public class DetailTV extends AppCompatActivity implements DetailTvContract.View {
 
     public static final String MOVIE_ITEM = "movie_item";
 
-    //    private MovieHelper movieHelper;
     private Boolean isFavorite = false;
     private TvSeriesItem item;
+    private TvHelper tvHelper;
 
     private final String TAG = "Details: ";
 
@@ -66,6 +73,9 @@ public class DetailTV extends AppCompatActivity implements DetailTvContract.View
     @BindView(R.id.scroll_tv)
     ScrollView scrollView;
 
+    @BindView(R.id.fav_tv)
+    FloatingActionButton favButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +86,24 @@ public class DetailTV extends AppCompatActivity implements DetailTvContract.View
 
         item = getIntent().getParcelableExtra(KEY_TV_ID);
 
-//        Log.d(TAG, "TV ID: " + item.getId());
-
         DetailTvPresenter detailTvPresenter = new DetailTvPresenter(this);
         detailTvPresenter.requestTvData(item.getId());
+
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFavorite) FavoriteRemove();
+                else FavoriteSave();
+
+                isFavorite = !isFavorite;
+                setFavorite();
+            }
+        });
+    }
+
+    private void setFavorite() {
+        if (isFavorite) favButton.setImageResource(R.drawable.ic_favorite);
+        else favButton.setImageResource(R.drawable.ic_favorite_border);
     }
 
     @Override
@@ -95,6 +119,9 @@ public class DetailTV extends AppCompatActivity implements DetailTvContract.View
 
     @Override
     public void setDataToView(TVDetailtem tvDetailtem) {
+
+        loadDataSQL();
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
 
@@ -124,6 +151,52 @@ public class DetailTV extends AppCompatActivity implements DetailTvContract.View
     @Override
     public void onResponseFailure(Throwable throwable) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (tvHelper != null) tvHelper.close();
+    }
+
+    private void loadDataSQL() {
+        tvHelper = new TvHelper(this);
+        tvHelper.open();
+
+        Cursor cursor = getContentResolver().query(
+                Uri.parse(CONTENT_URI_TV + "/" + item.getId()),
+                null,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) isFavorite = true;
+            cursor.close();
+        }
+        setFavorite();
+    }
+
+    private void FavoriteSave() {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DatabaseContract.TvColumns.TV_ID, item.getId());
+        contentValues.put(DatabaseContract.TvColumns.TITLE_TV, item.getOriginalName());
+        contentValues.put(DatabaseContract.TvColumns.OVERVIEW_TV, item.getOverview());
+        contentValues.put(DatabaseContract.TvColumns.POSTER_TV, item.getPosterPath());
+
+        getContentResolver().insert(CONTENT_URI_TV, contentValues);
+        Toast.makeText(this, "Save Success", Toast.LENGTH_SHORT).show();
+    }
+
+    private void FavoriteRemove() {
+        getContentResolver().delete(
+                Uri.parse(CONTENT_URI_TV + "/" + item.getId()),
+                null,
+                null
+        );
+        Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
     }
 
     @Override

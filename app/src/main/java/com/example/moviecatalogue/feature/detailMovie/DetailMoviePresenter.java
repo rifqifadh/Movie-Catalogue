@@ -18,7 +18,6 @@ public class DetailMoviePresenter implements DetailMovieContract.Presenter, Deta
             detailView.hideProgress();
         }
         detailView.setDataToView(movieDetailItem);
-//        detailView.
     }
 
     @Override

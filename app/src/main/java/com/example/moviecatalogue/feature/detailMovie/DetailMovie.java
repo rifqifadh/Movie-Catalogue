@@ -3,10 +3,10 @@ package com.example.moviecatalogue.feature.detailMovie;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,11 +15,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static android.provider.MediaStore.Audio.Playlists.Members._ID;
 import com.bumptech.glide.Glide;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.database.DatabaseContract;
 import com.example.moviecatalogue.database.MovieHelper;
+import com.example.moviecatalogue.database.TvHelper;
 import com.example.moviecatalogue.model.MovieDetailItem;
 import com.example.moviecatalogue.model.MovieItem;
 import com.example.moviecatalogue.network.ApiClient;
@@ -37,6 +37,7 @@ public class DetailMovie extends AppCompatActivity implements DetailMovieContrac
     public static final String MOVIE_ITEM = "movie_item";
 
     private MovieHelper movieHelper;
+    private TvHelper tvHelper;
     private Boolean isFavorite = false;
     private MovieItem item;
 
@@ -80,19 +81,11 @@ public class DetailMovie extends AppCompatActivity implements DetailMovieContrac
 
         ButterKnife.bind(this);
 
-//        if (!isFavorite) {
-//            isFavorite = true;
-//        }
-
-//        Log.d(TAG, "IsFavorite: " + isFavorite);
-
-
         item = getIntent().getParcelableExtra(KEY_MOVIE_ID);
 
         DetailMoviePresenter detailPresenter = new DetailMoviePresenter(this);
         detailPresenter.requestMovieData(item.getId());
 
-//        FavoriteSave();
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +157,9 @@ public class DetailMovie extends AppCompatActivity implements DetailMovieContrac
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "Movie Helper: " + movieHelper);
-        if (movieHelper != null) movieHelper.close();
+        if (movieHelper != null) {
+            movieHelper.close();
+        }
     }
 
 

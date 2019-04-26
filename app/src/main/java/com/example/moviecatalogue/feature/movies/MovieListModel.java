@@ -1,9 +1,5 @@
 package com.example.moviecatalogue.feature.movies;
 
-import android.util.Log;
-import android.widget.Toast;
-
-import com.example.moviecatalogue.feature.movies.MovieListContract;
 import com.example.moviecatalogue.model.MovieItem;
 import com.example.moviecatalogue.model.MovieListResponse;
 import com.example.moviecatalogue.network.ApiClient;

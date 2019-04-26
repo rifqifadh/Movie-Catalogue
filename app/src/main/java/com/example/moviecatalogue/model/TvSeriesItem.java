@@ -1,18 +1,25 @@
 package com.example.moviecatalogue.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.moviecatalogue.database.DatabaseContract;
 import com.google.gson.annotations.SerializedName;
+
+import static com.example.moviecatalogue.database.DatabaseContract.TvColumns.OVERVIEW_TV;
+import static com.example.moviecatalogue.database.DatabaseContract.TvColumns.POSTER_TV;
+import static com.example.moviecatalogue.database.DatabaseContract.TvColumns.TITLE_TV;
+import static com.example.moviecatalogue.database.DatabaseContract.TvColumns.TV_ID;
 
 public class TvSeriesItem implements Parcelable {
 
-    public TvSeriesItem(int id, String originalName, String posterPath, String overview) {
-        this.id = id;
-        this.originalName = originalName;
-        this.posterPath = posterPath;
-        this.overview = overview;
-    }
+//    public TvSeriesItem(int id, String originalName, String posterPath, String overview) {
+//        this.id = id;
+//        this.originalName = originalName;
+//        this.posterPath = posterPath;
+//        this.overview = overview;
+//    }
 
     private  int id;
 
@@ -25,7 +32,7 @@ public class TvSeriesItem implements Parcelable {
     @SerializedName("overview")
     private String overview;
 
-    protected TvSeriesItem(Parcel in) {
+    public TvSeriesItem(Parcel in) {
         id = in.readInt();
         originalName = in.readString();
         posterPath = in.readString();
@@ -43,6 +50,13 @@ public class TvSeriesItem implements Parcelable {
             return new TvSeriesItem[size];
         }
     };
+
+    public TvSeriesItem(Cursor cursor) {
+        this.id = DatabaseContract.getColumnInt(cursor, TV_ID);
+        this.originalName = DatabaseContract.getColumnString(cursor, TITLE_TV);
+        this.overview = DatabaseContract.getColumnString(cursor, OVERVIEW_TV);
+        this.posterPath = DatabaseContract.getColumnString(cursor, POSTER_TV);
+    }
 
     public int getId() {
         return id;

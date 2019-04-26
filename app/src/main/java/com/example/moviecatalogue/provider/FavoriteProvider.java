@@ -11,30 +11,40 @@ import android.support.annotation.Nullable;
 
 import com.example.moviecatalogue.database.DatabaseContract;
 import com.example.moviecatalogue.database.MovieHelper;
+import com.example.moviecatalogue.database.TvHelper;
 
 import java.util.Objects;
 
 import static com.example.moviecatalogue.database.DatabaseContract.CONTENT_URI;
 import static com.example.moviecatalogue.database.DatabaseContract.MovieColumns.TABLE_MOVIE;
+import static com.example.moviecatalogue.database.DatabaseContract.TvColumns.TABLE_TV;
 
 public class FavoriteProvider extends ContentProvider {
 
     private static final int FAVORITE_MOVIE = 1;
     private static final int FAVORITE_ID = 2;
+    private static final int FAVORITE_TV = 3;
+    private static final int FAVORITE_TV_ID = 4;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, TABLE_MOVIE, FAVORITE_MOVIE);
         sUriMatcher.addURI(DatabaseContract.AUTHORITY, TABLE_MOVIE + "/#", FAVORITE_ID);
+
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, TABLE_TV, FAVORITE_TV);
+        sUriMatcher.addURI(DatabaseContract.AUTHORITY, TABLE_TV + "/#", FAVORITE_TV_ID);
     }
 
     private MovieHelper movieHelper;
+    private TvHelper tvHelper;
 
     @Override
     public boolean onCreate() {
         movieHelper = new MovieHelper(getContext());
+        tvHelper = new TvHelper(getContext());
         movieHelper.open();
+        tvHelper.open();
         return false;
     }
 
@@ -49,6 +59,14 @@ public class FavoriteProvider extends ContentProvider {
 
             case FAVORITE_ID:
                 cursor = movieHelper.queryByIdProvider(uri.getLastPathSegment());
+                break;
+
+            case FAVORITE_TV:
+                cursor = tvHelper.queryProvider();
+                break;
+
+            case FAVORITE_TV_ID:
+                cursor = tvHelper.queryByIdProvider(uri.getLastPathSegment());
                 break;
 
             default:
@@ -78,6 +96,10 @@ public class FavoriteProvider extends ContentProvider {
                 added = movieHelper.insertProvider(values);
                 break;
 
+            case FAVORITE_TV:
+                added = tvHelper.insertProvider(values);
+                break;
+
             default:
                 added = 0;
                 break;
@@ -98,6 +120,10 @@ public class FavoriteProvider extends ContentProvider {
                 deleted = movieHelper.deleteProvider(uri.getLastPathSegment());
                 break;
 
+            case FAVORITE_TV_ID:
+                deleted = tvHelper.deleteProvider(uri.getLastPathSegment());
+                break;
+
             default:
                 deleted = 0;
                 break;
@@ -116,6 +142,9 @@ public class FavoriteProvider extends ContentProvider {
             case FAVORITE_ID:
                 updated = movieHelper.updateProvider(uri.getLastPathSegment(), values);
                 break;
+
+            case FAVORITE_TV_ID:
+                updated = tvHelper.updateProvider(uri.getLastPathSegment(), values);
 
             default:
                 updated = 0;

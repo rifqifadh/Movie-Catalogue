@@ -1,6 +1,5 @@
 package com.example.moviecatalogue.database;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,22 +7,22 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import static android.provider.BaseColumns._ID;
-import static com.example.moviecatalogue.database.DatabaseContract.MovieColumns.MOVIE_ID;
-import static com.example.moviecatalogue.database.DatabaseContract.MovieColumns.TABLE_MOVIE;
+import static com.example.moviecatalogue.database.DatabaseContract.TvColumns.TABLE_TV;
+import static com.example.moviecatalogue.database.DatabaseContract.TvColumns.TV_ID;
 
-public class MovieHelper {
+public class TvHelper {
 
-    private static String DATABASE_TABLE = TABLE_MOVIE;
+    private static String DATABASE_TABLE = TABLE_TV;
 
     private Context context;
     private DatabaseHelper databaseHelper;
     private SQLiteDatabase database;
 
-    public MovieHelper(Context context) {
+    public TvHelper(Context context) {
         this.context = context;
     }
 
-    public MovieHelper open() throws SQLException {
+    public TvHelper open() throws SQLException {
         databaseHelper = new DatabaseHelper(context);
         database = databaseHelper.getWritableDatabase();
         return this;
@@ -50,7 +49,7 @@ public class MovieHelper {
         return database.query(
                 DATABASE_TABLE,
                 null,
-                MOVIE_ID + " = ?",
+                TV_ID + " = ?",
                 new String[]{id},
                 null,
                 null,
@@ -71,7 +70,7 @@ public class MovieHelper {
         return database.update(
                 DATABASE_TABLE,
                 values,
-                MOVIE_ID + " = ?",
+                TV_ID + " = ?",
                 new String[]{id}
         );
     }
@@ -79,7 +78,7 @@ public class MovieHelper {
     public int deleteProvider(String id) {
         return database.delete(
                 DATABASE_TABLE,
-                MOVIE_ID + " = ?",
+                TV_ID + " = ?",
                 new String[]{id}
         );
     }

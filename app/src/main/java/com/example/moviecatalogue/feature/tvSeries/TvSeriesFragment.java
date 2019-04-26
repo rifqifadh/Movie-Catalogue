@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.example.moviecatalogue.MovieClickSupport;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.adapter.TvSeriesAdapter;
-import com.example.moviecatalogue.feature.detailMovie.DetailMovie;
 import com.example.moviecatalogue.feature.detailTV.DetailTV;
 import com.example.moviecatalogue.model.TvSeriesItem;
 
@@ -30,7 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.support.constraint.Constraints.TAG;
-import static com.example.moviecatalogue.utils.Constant.KEY_MOVIE_ID;
 import static com.example.moviecatalogue.utils.Constant.KEY_TV_ID;
 
 /**
@@ -72,16 +70,9 @@ public class TvSeriesFragment extends Fragment implements TvSeriesContract.View,
 
         Log.d(TAG, "view: " + view);
 
-//        if (savedInstanceState == null) {
             tvSeriesPresenter = new TvSeriesPresenter(this);
             tvSeriesPresenter.requestDataFromServer();
             Log.d(TAG, "presenter :" + tvSeriesPresenter);
-//        } else {
-//            tvSeriesItems = savedInstanceState.getParcelableArrayList(TV_LIST_STATE);
-//            tvSeriesPresenter = new TvSeriesPresenter(this);
-//            tvSeriesPresenter.requestDataFromServer();
-//            progressBar.setVisibility(View.GONE);
-//        }
 
         return view;
     }
