@@ -11,6 +11,7 @@ import android.widget.Switch;
 
 import com.example.moviecatalogue.notification.DailyReminder;
 import com.example.moviecatalogue.notification.Preference;
+import com.example.moviecatalogue.notification.ReleaseReminder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +30,7 @@ public class SettingActivity extends AppCompatActivity {
     private String KEY_RELEASE_REMINDER = "releasereminder";
 
     public DailyReminder dailyReminder;
+    public ReleaseReminder releaseReminder;
     public SharedPreferences dailyPref,releasePref;
     public SharedPreferences.Editor dailyEdt, releaseEdt;
     public Preference preference;
@@ -36,7 +38,8 @@ public class SettingActivity extends AppCompatActivity {
     private final String TAG = "Notification: ";
 
 
-    String timeDaily = "08:00";
+    String timeDaily = "07:00";
+    String timeRelease = "08:00";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class SettingActivity extends AppCompatActivity {
         }
 
         dailyReminder = new DailyReminder();
+        releaseReminder = new ReleaseReminder();
         preference = new Preference(this);
         setPreference();
 
@@ -84,14 +88,27 @@ public class SettingActivity extends AppCompatActivity {
         dailyReminder.cancelNotif(SettingActivity.this);
     }
 
+    private void releaseOn() {
+        String message = getResources().getString(R.string.message_release_today);
+        preference.setReleaseTime(timeRelease);
+        preference.setMsgRelease(message);
+        releaseReminder.setAlarmRelease(SettingActivity.this, RELEASE_REMINDER, timeRelease, message);
+    }
+
+    private void releaseOff() {
+        releaseReminder.cancelNotifRelease(SettingActivity.this);
+    }
+
     private void setRelease(boolean isChecked) {
         releaseEdt = releasePref.edit();
         if (isChecked) {
             releaseEdt.putBoolean(KEY_RELEASE_REMINDER, true);
             releaseEdt.apply();
+            releaseOn();
         } else {
             releaseEdt.putBoolean(KEY_RELEASE_REMINDER, false);
             releaseEdt.apply();
+            releaseOff();
         }
     }
 

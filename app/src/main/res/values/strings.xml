@@ -30,5 +30,6 @@
     <string name="title_favoriteapp">Module Title</string>
     <string name="title_daily_notif">Catalogue Movie</string>
     <string name="message_daily_notif">Catalogue Movie missing you!</string>
+    <string name="message_release_today">has been released today!</string>
 
 </resources>

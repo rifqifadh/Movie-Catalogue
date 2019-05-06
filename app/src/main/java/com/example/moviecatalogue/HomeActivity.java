@@ -7,12 +7,17 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.moviecatalogue.feature.favorites.FavoritesFragment;
 import com.example.moviecatalogue.feature.movies.MovieFragment;
 import com.example.moviecatalogue.feature.tvSeries.TvSeriesFragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,4 +87,6 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
         }
         super.onSaveInstanceState(outState);
     }
+
+
 }

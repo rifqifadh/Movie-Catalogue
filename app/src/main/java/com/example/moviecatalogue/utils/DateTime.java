@@ -30,4 +30,5 @@ public class DateTime {
     public static String getLongDate(String date) {
         return formatDate(date, "EEEE, MMM d, yyyy");
     }
+
 }

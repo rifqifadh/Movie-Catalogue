@@ -24,7 +24,7 @@ public class DailyReminder extends BroadcastReceiver {
 
     public static final int NOTIFICATION_ID = 10;
     public static String CHANNEL_ID = "channel_01";
-    public static CharSequence CHANNEL_NAME = "movie channel";
+    public static CharSequence CHANNEL_NAME = "daily channel";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -60,6 +60,7 @@ public class DailyReminder extends BroadcastReceiver {
 
         if (notificationManager != null) {
             notificationManager.notify(notifId, notification);
+            mBuilder.setAutoCancel(true);
         }
     }
 
@@ -78,9 +79,6 @@ public class DailyReminder extends BroadcastReceiver {
         intent.putExtra("type", type);
         String timeArray[] = time.split(":");
         Calendar calendar = Calendar.getInstance();
-//        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]));
-//        calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]));
-//        calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]));
         calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]));
         calendar.set(Calendar.SECOND, 0);

@@ -19,6 +19,7 @@ public class MovieItem implements Parcelable {
         title = in.readString();
         posterPath = in.readString();
         overview = in.readString();
+        releaseDate = in.readString();
     }
 
 
@@ -83,6 +84,17 @@ public class MovieItem implements Parcelable {
     @SerializedName("overview")
     private String overview;
 
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    @SerializedName("release_date")
+    private String releaseDate;
+
     @Override
     public int describeContents() {
         return 0;
@@ -94,6 +106,7 @@ public class MovieItem implements Parcelable {
         dest.writeString(title);
         dest.writeString(posterPath);
         dest.writeString(overview);
+        dest.writeString(releaseDate);
     }
 
     @Override
@@ -103,6 +116,7 @@ public class MovieItem implements Parcelable {
                 ", title='" + title + '\'' +
                 ", posterPath='" + posterPath + '\'' +
                 ", overview='" + overview + '\'' +
+                ", release date='" + releaseDate + '\'' +
                 '}';
 
     }
