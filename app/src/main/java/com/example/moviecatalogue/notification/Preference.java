@@ -19,7 +19,7 @@ public class Preference {
         editor = preferences.edit();
     }
 
-    public void setDailyTime(String time) {
+    public void setTimeDaily(String time) {
         editor.putString(DAILY_REMINDER, time);
         editor.commit();
     }

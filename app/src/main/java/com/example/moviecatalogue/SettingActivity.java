@@ -4,10 +4,12 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.example.moviecatalogue.notification.DailyReminder;
 import com.example.moviecatalogue.notification.Preference;
 
 import butterknife.BindView;
@@ -26,15 +28,18 @@ public class SettingActivity extends AppCompatActivity {
     private String KEY_DAILY_REMINDER = "dailyreminder";
     private String KEY_RELEASE_REMINDER = "releasereminder";
 
+    public DailyReminder dailyReminder;
     public SharedPreferences dailyPref,releasePref;
     public SharedPreferences.Editor dailyEdt, releaseEdt;
     public Preference preference;
 
+    private final String TAG = "Notification: ";
+
+
+    String timeDaily = "08:00";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
@@ -46,6 +51,8 @@ public class SettingActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.settings);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        dailyReminder = new DailyReminder();
         preference = new Preference(this);
         setPreference();
 
@@ -64,6 +71,19 @@ public class SettingActivity extends AppCompatActivity {
         });
     }
 
+
+    private void dailyOn() {
+        String message = getResources().getString(R.string.message_daily_notif);
+        preference.setTimeDaily(timeDaily);
+        preference.setMsgDaily(message);
+        Log.d(TAG, timeDaily);
+        dailyReminder.setAlarm(SettingActivity.this, DAILY_REMINDER, timeDaily, message);
+    }
+
+    private void dailyOff() {
+        dailyReminder.cancelNotif(SettingActivity.this);
+    }
+
     private void setRelease(boolean isChecked) {
         releaseEdt = releasePref.edit();
         if (isChecked) {
@@ -80,9 +100,11 @@ public class SettingActivity extends AppCompatActivity {
         if (isChecked) {
             dailyEdt.putBoolean(KEY_DAILY_REMINDER, true);
             dailyEdt.apply();
+            dailyOn();
         } else {
             dailyEdt.putBoolean(KEY_DAILY_REMINDER, false);
             dailyEdt.apply();
+            dailyOff();
         }
     }
 

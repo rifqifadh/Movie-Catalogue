@@ -1,5 +1,6 @@
 package com.example.moviecatalogue.notification;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,15 +17,19 @@ import android.support.v4.app.NotificationCompat;
 import com.example.moviecatalogue.HomeActivity;
 import com.example.moviecatalogue.R;
 
+import java.util.Calendar;
+import java.util.Objects;
+
 public class DailyReminder extends BroadcastReceiver {
 
-    public static final int NOTIFICATION_ID = 1;
+    public static final int NOTIFICATION_ID = 10;
     public static String CHANNEL_ID = "channel_01";
     public static CharSequence CHANNEL_NAME = "movie channel";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        notifDaily(context, context.getResources().getString(R.string.message_daily_notif),
+                intent.getStringExtra("message"), NOTIFICATION_ID);
     }
 
     private void notifDaily(Context context, String title, String message, int notifId) {
@@ -40,7 +45,7 @@ public class DailyReminder extends BroadcastReceiver {
                 .setSmallIcon(R.drawable.ic_notif)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setVibrate(new long[] {1000, 1000, 1000})
+                .setVibrate(new long[] {1000, 1000, 1000, 1000})
                 .setSound(defaultNotif);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -54,7 +59,33 @@ public class DailyReminder extends BroadcastReceiver {
         Notification notification = mBuilder.build();
 
         if (notificationManager != null) {
-            notificationManager.notify(NOTIFICATION_ID, notification);
+            notificationManager.notify(notifId, notification);
         }
+    }
+
+    public void cancelNotif(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, DailyReminder.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_ID, intent, 0);
+        (alarmManager).cancel(pendingIntent);
+    }
+
+    public void setAlarm(Context context, String type, String time, String message) {
+        cancelNotif(context);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, DailyReminder.class);
+        intent.putExtra("message", message);
+        intent.putExtra("type", type);
+        String timeArray[] = time.split(":");
+        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]));
+//        calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]));
+//        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(timeArray[1]));
+        calendar.set(Calendar.SECOND, 0);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, NOTIFICATION_ID, intent, 0);
+        Objects.requireNonNull(alarmManager).setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 }
