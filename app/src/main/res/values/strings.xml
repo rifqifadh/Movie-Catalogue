@@ -26,8 +26,9 @@
     <string name="add_widget">Add widget</string>
     <string name="empty">NO DATA</string>
     <string name="daily_reminder">Daily Reminder</string>
-    <string name="reminder_for_return_to_app">Reminder for return to app</string>
     <string name="settings">Settings</string>
     <string name="title_favoriteapp">Module Title</string>
+    <string name="title_daily_notif">Catalogue Movie</string>
+    <string name="message_daily_notif">Catalogue Movie missing you!</string>
 
 </resources>
