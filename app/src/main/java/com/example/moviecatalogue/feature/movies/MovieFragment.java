@@ -9,7 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -19,7 +22,7 @@ import com.example.moviecatalogue.MovieClickSupport;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.adapter.MovieAdapter;
 import com.example.moviecatalogue.feature.detailMovie.DetailMovie;
-import com.example.moviecatalogue.model.MovieItem;
+import com.example.moviecatalogue.entity.MovieItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.example.moviecatalogue.utils.Constant.KEY_MOVIE_ID;
+import static com.example.moviecatalogue.utils.Constant.SEARCH_MOVIE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -128,6 +132,32 @@ public class MovieFragment extends Fragment implements MovieListContract.View, M
             }
         });
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.search_menu, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setQueryHint(getResources().getString(R.string.search_label));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getContext(), SearchMovie.class);
+                    intent.putExtra(SEARCH_MOVIE, query);
+                    startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                return false;
+            }
+        });
+    }
+
+
 
     @Override
     public void showProgress() {

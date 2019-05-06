@@ -13,8 +13,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.moviecatalogue.R;
+import com.example.moviecatalogue.feature.tvSeries.SearchTV;
 import com.example.moviecatalogue.feature.tvSeries.TvSeriesFragment;
-import com.example.moviecatalogue.model.TvSeriesItem;
+import com.example.moviecatalogue.entity.TvSeriesItem;
 import com.example.moviecatalogue.network.ApiClient;
 
 import java.util.List;
@@ -25,6 +26,13 @@ import butterknife.ButterKnife;
 public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.ViewHolder> {
 
     private TvSeriesFragment tvSeriesFragment;
+    private SearchTV searchTV;
+
+    public TvSeriesAdapter(SearchTV searchTV, List<TvSeriesItem> tvSeriesItemList) {
+        this.searchTV = searchTV;
+        this.tvSeriesItemList = tvSeriesItemList;
+    }
+
     private List<TvSeriesItem> tvSeriesItemList;
     private Context context;
 
@@ -54,14 +62,27 @@ public class TvSeriesAdapter extends RecyclerView.Adapter<TvSeriesAdapter.ViewHo
 
         Log.d(TAG, "TV: " + String.valueOf(tvSeriesItem.getId()));
 
-        Glide.with(tvSeriesFragment).load(ApiClient.IMAGE_BASE_URL + tvSeriesItem.getPosterPath()).into(holder.imgPoster);
+        if (tvSeriesFragment != null) {
+            Glide.with(tvSeriesFragment).load(ApiClient.IMAGE_BASE_URL + tvSeriesItem.getPosterPath()).into(holder.imgPoster);
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvSeriesFragment.onMovieItemClick(holder.getAdapterPosition());
-            }
-        });
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tvSeriesFragment.onMovieItemClick(holder.getAdapterPosition());
+                }
+            });
+        } else if (searchTV != null) {
+            Glide.with(searchTV).load(ApiClient.IMAGE_BASE_URL + tvSeriesItem.getPosterPath()).into(holder.imgPoster);
+
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    searchTV.onMovieItemClick(holder.getAdapterPosition());
+                }
+            });
+        }
+
+
     }
 
     @Override

@@ -4,13 +4,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateTime {
 
     private static String formatDate(String date, String format) {
         String result = "";
 
-        DateFormat old = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat old = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         try {
             Date oldDate = old.parse(date);
             DateFormat newFormat = new SimpleDateFormat(format);

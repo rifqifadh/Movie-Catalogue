@@ -1,6 +1,6 @@
 package com.example.moviecatalogue.feature.movies;
 
-import com.example.moviecatalogue.model.MovieItem;
+import com.example.moviecatalogue.entity.MovieItem;
 
 import java.util.List;
 

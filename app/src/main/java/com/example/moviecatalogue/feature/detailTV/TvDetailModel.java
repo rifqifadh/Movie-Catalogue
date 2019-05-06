@@ -1,6 +1,6 @@
 package com.example.moviecatalogue.feature.detailTV;
 
-import com.example.moviecatalogue.model.TVDetailtem;
+import com.example.moviecatalogue.entity.TVDetailtem;
 import com.example.moviecatalogue.network.ApiClient;
 import com.example.moviecatalogue.network.ApiInterface;
 

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.adapter.FavoriteTvAdapter;
-import com.example.moviecatalogue.model.TvSeriesItem;
+import com.example.moviecatalogue.entity.TvSeriesItem;
 
 import static com.example.moviecatalogue.database.DatabaseContract.CONTENT_URI_TV;
 

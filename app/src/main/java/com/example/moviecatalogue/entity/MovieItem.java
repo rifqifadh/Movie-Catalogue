@@ -1,4 +1,4 @@
-package com.example.moviecatalogue.model;
+package com.example.moviecatalogue.entity;
 
 import android.database.Cursor;
 import android.os.Parcel;
@@ -96,14 +96,14 @@ public class MovieItem implements Parcelable {
         dest.writeString(overview);
     }
 
-//    @Override
-//    public String toString() {
-//        return "Movie{" +
-//                "id=" + id +
-//                ", title='" + title + '\'' +
-//                ", posterPath='" + posterPath + '\'' +
-//                ", overview='" + overview + '\'' +
-//                '}';
-//
-//    }
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", posterPath='" + posterPath + '\'' +
+                ", overview='" + overview + '\'' +
+                '}';
+
+    }
 }

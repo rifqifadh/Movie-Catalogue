@@ -13,7 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.feature.movies.MovieFragment;
-import com.example.moviecatalogue.model.MovieItem;
+import com.example.moviecatalogue.feature.movies.SearchMovie;
+import com.example.moviecatalogue.entity.MovieItem;
 import com.example.moviecatalogue.network.ApiClient;
 
 import java.util.List;
@@ -24,17 +25,20 @@ import butterknife.ButterKnife;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
 
     private MovieFragment movieFragment;
+    private SearchMovie searchMovie;
     private List<MovieItem> movieItemList;
     private Context context;
-//    private List<MovieItem> originalMovieList;
 
     private final String TAG = "Adapter";
 
+    public MovieAdapter(SearchMovie searchMovie, List<MovieItem> movieItemList) {
+        this.searchMovie = searchMovie;
+        this.movieItemList = movieItemList;
+    }
 
     public MovieAdapter(MovieFragment movieFragment, List<MovieItem> movieItemList) {
         this.movieFragment = movieFragment;
         this.movieItemList = movieItemList;
-//        this.originalMovieList = movieItemList;
     }
 
     @NonNull
@@ -53,14 +57,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.tvTitle.setText(movieItem.getTitle());
         holder.tvDesc.setText(movieItem.getOverview());
 
-        Glide.with(movieFragment).load(ApiClient.IMAGE_BASE_URL + movieItem.getPosterPath()).into(holder.imgPoster);
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                movieFragment.onMovieItemClick(holder.getAdapterPosition());
-            }
-        });
+        if (movieFragment != null) {
+            Glide.with(movieFragment).load(ApiClient.IMAGE_BASE_URL + movieItem.getPosterPath()).into(holder.imgPoster);
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    movieFragment.onMovieItemClick(holder.getAdapterPosition());
+                }
+            });
+        } else if (searchMovie != null){
+            Glide.with(searchMovie).load(ApiClient.IMAGE_BASE_URL + movieItem.getPosterPath()).into(holder.imgPoster);
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    searchMovie.onMovieItemClick(holder.getAdapterPosition());
+                }
+            });
+        }
     }
 
     @Override

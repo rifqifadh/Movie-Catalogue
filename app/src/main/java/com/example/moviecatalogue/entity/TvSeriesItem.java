@@ -1,4 +1,4 @@
-package com.example.moviecatalogue.model;
+package com.example.moviecatalogue.entity;
 
 import android.database.Cursor;
 import android.os.Parcel;
@@ -13,13 +13,6 @@ import static com.example.moviecatalogue.database.DatabaseContract.TvColumns.TIT
 import static com.example.moviecatalogue.database.DatabaseContract.TvColumns.TV_ID;
 
 public class TvSeriesItem implements Parcelable {
-
-//    public TvSeriesItem(int id, String originalName, String posterPath, String overview) {
-//        this.id = id;
-//        this.originalName = originalName;
-//        this.posterPath = posterPath;
-//        this.overview = overview;
-//    }
 
     private  int id;
 

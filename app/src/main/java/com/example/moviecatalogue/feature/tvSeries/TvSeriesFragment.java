@@ -9,8 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -20,7 +23,7 @@ import com.example.moviecatalogue.MovieClickSupport;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.adapter.TvSeriesAdapter;
 import com.example.moviecatalogue.feature.detailTV.DetailTV;
-import com.example.moviecatalogue.model.TvSeriesItem;
+import com.example.moviecatalogue.entity.TvSeriesItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,7 @@ import butterknife.ButterKnife;
 
 import static android.support.constraint.Constraints.TAG;
 import static com.example.moviecatalogue.utils.Constant.KEY_TV_ID;
+import static com.example.moviecatalogue.utils.Constant.SEARCH_MOVIE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -90,16 +94,7 @@ public class TvSeriesFragment extends Fragment implements TvSeriesContract.View,
         tvSeriesAdapter = new TvSeriesAdapter(this, tvSeriesItems);
         rvTvseries.setAdapter(tvSeriesAdapter);
 
-//        rvTvseries = view.findViewById(R.id.rv_list_tv);
-//        linearLayoutManager = new LinearLayoutManager(getContext());
-//        rvTvseries.setHasFixedSize(true);
-//        rvTvseries.setLayoutManager(linearLayoutManager);
-//        tvSeriesAdapter = new TvSeriesAdapter(this, tvSeriesItems);
-//        rvTvseries.setAdapter(tvSeriesAdapter);
-
-//        Log.d(TAG, "adapter: " + rvTvseries.setAdapter(tvSeriesAdapter););
-
-//        setListener();
+        setListener();
     }
 
     @Override
@@ -129,6 +124,30 @@ public class TvSeriesFragment extends Fragment implements TvSeriesContract.View,
                     tvSeriesPresenter.getMoreData(pageNo);
                     loading = true;
                 }
+            }
+        });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.search_menu, menu);
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setQueryHint(getResources().getString(R.string.search_label));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getContext(), SearchTV.class);
+                intent.putExtra(SEARCH_MOVIE, query);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                return false;
             }
         });
     }

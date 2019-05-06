@@ -6,20 +6,6 @@ import android.view.View;
 
 public class ItemClickSupport {
 
-//    private final RecyclerView mRecyclerView;
-//    private AdapterView.OnItemClickListener mOnItemClickListener;
-//    private AdapterView.OnItemLongClickListener mOnItemLongClickListener;
-//
-//    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            if (mOnItemClickListener != null) {
-//                RecyclerView.ViewHolder holder = mRecyclerView.getChildViewHolder(v);
-//                mOnItemClickListener.onItemClick(mRecyclerView, holder.getAdapterPosition(), v);
-//            }
-//        }
-//    };
-
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;

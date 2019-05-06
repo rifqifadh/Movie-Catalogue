@@ -18,7 +18,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".feature.detailTV.DetailTV"></activity>
+        <activity android:name=".SettingActivity"></activity>
+
+        <receiver android:name=".widget.FavoriteWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_widget_info" />
+        </receiver>
+
+        <activity android:name=".feature.tvSeries.SearchTV" />
+        <activity android:name=".feature.movies.SearchMovie" />
+        <activity android:name=".feature.detailTV.DetailTV" />
         <activity android:name=".feature.detailMovie.DetailMovie" />
 
         <provider
@@ -35,6 +49,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

@@ -66,8 +66,11 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_change_settings) {
-            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-            startActivity(mIntent);
+            Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.setting_reminder) {
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

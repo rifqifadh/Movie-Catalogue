@@ -16,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.feature.detailMovie.DetailMovie;
 import com.example.moviecatalogue.feature.favorites.favoriteMovie.FavoriteMovieFragment;
-import com.example.moviecatalogue.model.MovieItem;
+import com.example.moviecatalogue.entity.MovieItem;
 import com.example.moviecatalogue.network.ApiClient;
 
 import butterknife.BindView;

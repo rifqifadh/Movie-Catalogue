@@ -1,6 +1,6 @@
 package com.example.moviecatalogue.feature.detailMovie;
 
-import com.example.moviecatalogue.model.MovieDetailItem;
+import com.example.moviecatalogue.entity.MovieDetailItem;
 
 public class DetailMoviePresenter implements DetailMovieContract.Presenter, DetailMovieContract.Model.OnFinishedListener {
 

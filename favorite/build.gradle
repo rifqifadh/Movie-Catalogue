@@ -2,7 +2,7 @@ apply plugin: 'com.android.dynamic-feature'
 
 android {
     compileSdkVersion 28
-    
+
 
 
     defaultConfig {

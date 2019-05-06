@@ -97,9 +97,4 @@ public class FavoriteMovieFragment extends Fragment {
         super.onDestroyView();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
 }
